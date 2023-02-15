@@ -1,7 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import APIURL from './apiendpoint'
 
 function App() {
+
+  const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    fetch(`${APIURL}/todos`)
+    .then(res => res.json())
+    .then(data => {
+      setTasks(data)
+    })
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +30,9 @@ function App() {
         >
           Learn React
         </a>
+        <ul>
+          {tasks.map(t => <li key={t.id}>{t.task}</li>)}
+        </ul>
       </header>
     </div>
   );
